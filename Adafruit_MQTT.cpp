@@ -243,9 +243,9 @@ Adafruit_MQTT_Subscribe *Adafruit_MQTT::readSubscription(int16_t timeout) {
   memset(subscriptions[i]->lastread, 0, SUBSCRIPTIONDATALEN);
 
   datalen = len - topiclen - 4;
-  if (datalen > SUBSCRIPTIONDATALEN) {
-    datalen = SUBSCRIPTIONDATALEN-1; // cut it off
-  }
+  // if (datalen > SUBSCRIPTIONDATALEN) {
+  //   datalen = SUBSCRIPTIONDATALEN-1; // cut it off
+  // }
   // extract out just the data, into the subscription object itself
   memcpy(subscriptions[i]->lastread, buffer+4+topiclen, datalen);
   subscriptions[i]->datalen = datalen;
