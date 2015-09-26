@@ -26,7 +26,7 @@ void printBuffer(uint8_t *buffer, uint8_t len) {
   for (uint8_t i=0; i<len; i++) {
     if (isprint(buffer[i]))
       DEBUG_PRINTER.write(buffer[i]);
-    else  
+    else
       DEBUG_PRINTER.print(" ");
     DEBUG_PRINTER.print(F(" [0x"));
     if (buffer[i] < 0x10)
@@ -119,17 +119,17 @@ int8_t Adafruit_MQTT::connect() {
   // Connect to the server.
   if (!connectServer())
     return -1;
-  
+
   // Construct and send connect packet.
   uint8_t len = connectPacket(buffer);
   if (!sendPacket(buffer, len))
     return -1;
 
-  // Read connect response packet and verify it  
+  // Read connect response packet and verify it
   len = readPacket(buffer, 4, CONNECT_TIMEOUT_MS);
   if (len != 4)
     return -1;
-  if ((buffer[0] != (MQTT_CTRL_CONNECTACK << 4)) || (buffer[1] != 2))
+  if ((buffer[0] != (MQTT_CTRL_CONNECTACK << 4)))
     return -1;
   if (buffer[3] != 0)
     return buffer[3];
@@ -143,7 +143,7 @@ int8_t Adafruit_MQTT::connect() {
     uint8_t len = subscribePacket(buffer, subscriptions[i]->topic, subscriptions[i]->qos);
     if (!sendPacket(buffer, len))
       return -1;
-    
+
     // Get SUBACK
     len = readPacket(buffer, 5, CONNECT_TIMEOUT_MS);
     DEBUG_PRINT(F("SUBACK:\t"));
@@ -174,7 +174,7 @@ bool Adafruit_MQTT::publish(const char *topic, const char *data, uint8_t qos) {
   uint8_t len = publishPacket(buffer, topic, data, qos);
   if (!sendPacket(buffer, len))
     return false;
-  
+
   // If QOS level is high enough verify the response packet.
   if (qos > 0) {
     len = readPacket(buffer, 4, PUBLISH_TIMEOUT_MS);
@@ -233,7 +233,7 @@ Adafruit_MQTT_Subscribe *Adafruit_MQTT::readSubscription(int16_t timeout) {
       // to make comparison case insensitive.
       if (strncasecmp_P((char*)buffer+4, subscriptions[i]->topic, topiclen) == 0) {
         DEBUG_PRINT(F("Found sub #")); DEBUG_PRINTLN(i);
-        break;        
+        break;
       }
     }
   }
@@ -262,11 +262,11 @@ bool Adafruit_MQTT::ping(uint8_t times) {
     uint8_t len = pingPacket(buffer);
     if (!sendPacket(buffer, len))
       return false;
-    
+
     // Process ping reply.
     len = readPacket(buffer, 2, PING_TIMEOUT_MS);
     if (buffer[0] == (MQTT_CTRL_PINGRESP << 4))
-      return true;  
+      return true;
   }
   return false;
 }
@@ -287,7 +287,7 @@ uint8_t Adafruit_MQTT::connectPacket(uint8_t *packet) {
   p+=2;
   // fill in packet[1] last
 
-  p = stringprint_P(p, PSTR("MQIsdp"));
+  p = stringprint_P(p, PSTR("MQTT"));
 
   p[0] = MQTT_PROTOCOL_LEVEL;
   p++;
@@ -322,7 +322,7 @@ uint8_t Adafruit_MQTT::connectPacket(uint8_t *packet) {
   return len;
 }
 
-uint8_t Adafruit_MQTT::publishPacket(uint8_t *packet, const char *topic, 
+uint8_t Adafruit_MQTT::publishPacket(uint8_t *packet, const char *topic,
                                      const char *data, uint8_t qos) {
   uint8_t *p = packet;
   uint16_t len;
@@ -342,7 +342,7 @@ uint8_t Adafruit_MQTT::publishPacket(uint8_t *packet, const char *topic,
   return len;
 }
 
-uint8_t Adafruit_MQTT::subscribePacket(uint8_t *packet, const char *topic, 
+uint8_t Adafruit_MQTT::subscribePacket(uint8_t *packet, const char *topic,
                                        uint8_t qos) {
   uint8_t *p = packet;
   uint16_t len;
@@ -379,7 +379,7 @@ uint8_t Adafruit_MQTT::pingPacket(uint8_t *packet) {
 
 // Adafruit_MQTT_Publish Definition ////////////////////////////////////////////
 
-Adafruit_MQTT_Publish::Adafruit_MQTT_Publish(Adafruit_MQTT *mqttserver, 
+Adafruit_MQTT_Publish::Adafruit_MQTT_Publish(Adafruit_MQTT *mqttserver,
                                              const char *feed, uint8_t q) {
   mqtt = mqttserver;
   topic = feed;
@@ -418,7 +418,7 @@ bool Adafruit_MQTT_Publish::publish(const char *payload) {
 
 // Adafruit_MQTT_Subscribe Definition //////////////////////////////////////////
 
-Adafruit_MQTT_Subscribe::Adafruit_MQTT_Subscribe(Adafruit_MQTT *mqttserver, 
+Adafruit_MQTT_Subscribe::Adafruit_MQTT_Subscribe(Adafruit_MQTT *mqttserver,
                                                  const char *feed, uint8_t q) {
   mqtt = mqttserver;
   topic = feed;
