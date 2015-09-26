@@ -83,7 +83,7 @@
 
 // how much data we save in a subscription object
 // eg max-subscription-payload-size
-#define SUBSCRIPTIONDATALEN 20
+#define SUBSCRIPTIONDATALEN 1024
 
 
 extern void printBuffer(uint8_t *buffer, uint8_t len);

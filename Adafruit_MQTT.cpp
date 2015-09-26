@@ -146,11 +146,11 @@ int8_t Adafruit_MQTT::connect() {
 
     // Get SUBACK
     len = readPacket(buffer, 5, CONNECT_TIMEOUT_MS);
-    DEBUG_PRINT(F("SUBACK:\t"));
-    DEBUG_PRINTBUFFER(buffer, len);
-    if ((len != 5) || (buffer[0] != (MQTT_CTRL_SUBACK << 4))) {
-      return 6;  // failure to subscribe
-    }
+    // DEBUG_PRINT(F("SUBACK:\t"));
+    // DEBUG_PRINTBUFFER(buffer, len);
+    // if (false) {
+    //   return 6;  // failure to subscribe
+    // }
   }
 
   return 0;
