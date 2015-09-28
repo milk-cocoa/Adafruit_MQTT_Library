@@ -37,7 +37,7 @@ WiFiClient client;
 
 // Store the MQTT server, client ID, username, and password in flash memory.
 // This is required for using the Adafruit MQTT library.
-const char MQTT_SERVER[] PROGMEM    = MILKCOCOA_APP_ID ".mlkcca.com"
+const char MQTT_SERVER[] PROGMEM    = MILKCOCOA_APP_ID ".mlkcca.com";
 // Set a unique MQTT client ID using the Milkcocoa key + the date and time the sketch
 // was compiled (so this should be unique across multiple devices for a user,
 // alternatively you can manually set this to a GUID or other random value).
